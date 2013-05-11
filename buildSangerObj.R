@@ -187,30 +187,41 @@ sangerCells <- cellsObj(synId = synIds, exprSet = as.data.frame(sangerGE), cnvSe
 setwd('/Users/fredcommo/Documents/MyProjects/CellLines/SangerCells/')
 save(sangerCells, file = 'sangerCells.RData')
 
+
+#############################################################
+#
+# Doesn't work yet!
+#
+#############################################################
+
 # Store in synapse
 # demo of how to create a file then use the uploaded file in a wiki
-projectId <- "syn1834037"
+projectId <- "syn1855795"
 
-# Store RData"
+# Store RData manually
 myPath <- paste0(getwd(),'/')
-RObject <- "sangerCells.RData"
-file <- File(paste0(myPath, RObject), parentId=projectId)
-file <- synStore(file)
+myData <- Data(list(name = "sangerCells.RData", parentId = projectId))
+myData <- synStore(myData) # then go to synapse and upload the .RData manually
 
 # Store RObject constructor and accessors
 myCode <- Code(list(name = "cellLinesObjClass.R", parentId = projectId))
 myCode <- addFile(myCode, paste0(myPath, 'cellLinesObjClass.R'))
 myCode <- synStore(myCode)
 
-# Add a provenance
-used(file)<-list(list(entity = myCode, wasExecuted = TRUE),
-                 list(entity = rawData, wasExecuted = FALSE))
-file <- synStore(file)
-
 # Store Rcode
 myCode <- Code(list(name = "buildSangerObj.R", parentId = projectId))
 myCode <- addFile(myCode, paste0(myPath, 'buildSangerObj.R'))
 myCode <- synStore(myCode)
+
+# Add a provenance
+myData <- getEntity('syn1855799')
+used(myData) <- list(list(entity = myCode, wasExecuted=T),
+              list(entity = getEntity('syn427896'), wasExecuted=F),
+              list(entity = getEntity('syn1417761'), wasExecuted=F),
+                   list(entity = getEntity('syn1836914'), wasExecuted=F),
+                   list(entity = getEntity('syn1836934'), wasExecuted=F),
+                   list(entity = getEntity('syn1836925'), wasExecuted=F))
+myData <- synStore(myData)
 
 
 
