@@ -182,7 +182,7 @@ getAUC(object), getDrugs(object), getCells(object)\n\n')
 
 sangerCells <- cellsObj(synId = synIds, exprSet = as.data.frame(sangerGE), cnvSet = as.data.frame(sangerCNV),
                     mutSet = as.data.frame(mut), IC50 = as.data.frame(IC50), AUC = as.data.frame(AUC),
-                    drugInfo = as.data.frame(drugs), cellsInfo = as.data.frame(Info))
+                    drugInfo = as.data.frame(drugs), cellsInfo = as.data.frame(fullInfo))
 # Store locally
 setwd('/Users/fredcommo/Documents/MyProjects/CellLines/SangerCells/')
 save(sangerCells, file = 'sangerCells.RData')
